@@ -14,10 +14,8 @@ import logging
 import functools
 import threading
 
-try:
-    from Queue import Queue
-except:
-    from queue import Queue
+
+from queue import Queue
 
 from tornado.web import Application
 from tornado.ioloop  import PollIOLoop
@@ -812,17 +810,17 @@ class mqtt3context(object):
             acl_token_list = filter(None, acl_topic.split('/'))
             len1 = len(acl_token_list)
             if len0 == len1:
-                for i in xrange(len0):
+                for i in (len0):
                     if topic_token_list[i] != acl_token_list[i] and acl_token_list[i] != "+" and acl_token_list[i] != "#":
                         break
                 else: return True
             elif len0 == len1-1 and acl_token_list[len1-1] == "#":
-                for i in xrange(len0):
+                for i in range(len0):
                     if topic_token_list[i] != acl_token_list[i] and acl_token_list[i] != "+":
                         break
                 else: return True
             elif len0 > len1:
-                for i in xrange(len1):
+                for i in range(len1):
                     if topic_token_list[i] != acl_token_list[i] and acl_token_list[i] != "+" and acl_token_list[i] != "#":
                         break
                 else: return True        
@@ -873,7 +871,7 @@ class MQTTSrv(Application):
         send_thread.start()
         
         server = mqtt3server()    
-        server.listen(1883)
+        server.listen(1884)
         
         PollIOLoop.instance().start()   
         

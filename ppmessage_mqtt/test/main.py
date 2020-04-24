@@ -4,7 +4,7 @@
 # Ding Guijin, guijin.ding@yvertical.com
 #
 
-from mqttclient import MQTTClient
+from .mqttclient import MQTTClient
 
 import uuid
 import unittest

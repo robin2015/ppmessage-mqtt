@@ -12,7 +12,7 @@ import logging
 import struct
 import time
 
-from Queue import Queue
+from queue import Queue
 from tornado.ioloop import PollIOLoop    
 
 # Worker command
@@ -69,10 +69,10 @@ class sys_stat:
         curr_time = time.time()
         self._uptime = curr_time - self._timestamp
         self._timestamp = curr_time
-        self._received_bytes_per_sec = long(self._received_bytes / self._uptime)
-        self._sent_bytes_per_sec = long(self._sent_bytes / self._uptime)
-        self._received_messages_per_sec = long(self._received_messages / self._uptime)
-        self._sent_messages_per_sec =  long(self._sent_messages / self._uptime)
+        self._received_bytes_per_sec = int(self._received_bytes / self._uptime)
+        self._sent_bytes_per_sec = int(self._sent_bytes / self._uptime)
+        self._received_messages_per_sec = int(self._received_messages / self._uptime)
+        self._sent_messages_per_sec =  int(self._sent_messages / self._uptime)
 
         self._total_received_bytes += self._received_bytes
         self._total_sent_bytes += self._sent_bytes
@@ -513,7 +513,7 @@ class ppmtdb(object):
         
         pub_token = pub_token_list.pop()
 
-        if sub_dict.has_key(pub_token):
+        if pub_token in sub_dict:
             if len(pub_token_list):
                 next_sub_dict = sub_dict[pub_token].children
                 self.pub4pub(topic, qos, message, pub_token_list, next_sub_dict)
@@ -527,7 +527,7 @@ class ppmtdb(object):
                         pub_qos = min( qos, sub_dict[pub_token].clients[client_id] )
                         context = self.cnns[client_id].context
 
-        if sub_dict.has_key('+'):
+        if '+' in sub_dict:
             if len(pub_token_list):
                 next_sub_dict = sub_dict['+'].children
                 self.pub4pub(topic, qos, message, pub_token_list, next_sub_dict)
@@ -652,7 +652,7 @@ class ppmtdb(object):
         return
             
     def pub_sysinfo(self, topic, qos, message):
-        pub_token_list = filter(None, topic.split('/'))[::-1] # reverse the list for recursive call
+        pub_token_list = list(filter(None, topic.split('/')))[::-1] # reverse the list for recursive call
         sub_dict = self.sub_root.children
         self.pub4pub(topic, qos, message, pub_token_list, sub_dict)
 

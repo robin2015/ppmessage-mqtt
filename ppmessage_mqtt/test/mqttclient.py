@@ -5,13 +5,13 @@
 #
 
 from paho.mqtt import client as mqttc
-from Queue import Queue
+from queue import Queue
 
 import json
 import logging
 import datetime
 
-MQTT_PORT = 1883
+MQTT_PORT = 1884
 MQTT_HOST = "127.0.0.1"
 
 class MQTTClient():
