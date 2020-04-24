@@ -5,7 +5,7 @@
 #
 
 from .mqttclient import MQTTClient
-
+import pytest
 import uuid
 import unittest
 import logging

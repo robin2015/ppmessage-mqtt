@@ -276,7 +276,7 @@ class ppmtdb(object):
                     parent = sub[token]
                     sub = sub[token].children
 
-        if self.cnns.has_key(client_id):
+        if client_id in self.cnns:
             self.cnns[client_id].subs[fulltopic] = qos
             self.sys_info._subscriptions_count += 1
 
@@ -542,7 +542,7 @@ class ppmtdb(object):
                         context = self.cnns[client_id].context
 
 
-        if sub_dict.has_key('#'):
+        if '#' in sub_dict:
             for client_id in sub_dict['#'].clients:
                 if self.cnns[client_id].active:
                     pub_qos = min( qos, sub_dict['#'].clients[client_id] )
